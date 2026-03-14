@@ -488,6 +488,48 @@
       color: var(--text-light);
     }
 
+    /* ---- OS TOGGLE ---- */
+    .os-toggle {
+      display: flex;
+      justify-content: center;
+      margin: 0 0 40px;
+    }
+
+    .os-toggle-pill {
+      display: inline-flex;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 4px;
+      gap: 2px;
+    }
+
+    .os-toggle-btn {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 8px 24px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: transparent;
+      color: var(--text-muted);
+      transition: all 0.15s;
+    }
+
+    .os-toggle-btn:hover {
+      color: var(--text);
+    }
+
+    .os-toggle-btn.active {
+      background: var(--accent);
+      color: #FFFFFF;
+    }
+
+    /* Platform-specific visibility */
+    body[data-os="mac"] .os-win { display: none; }
+    body[data-os="win"] .os-mac { display: none; }
+
     /* ---- RESPONSIVE ---- */
     @media (max-width: 640px) {
       .hero { padding: 120px 24px 60px; }
@@ -503,16 +545,17 @@
     }
   </style>
 </head>
-<body>
+<body data-os="mac">
 
 <nav>
   <div class="nav-inner">
     <span class="nav-title">Workshop Setup</span>
     <ul class="nav-links">
       <li><a href="#prerequisites">Prerequisites</a></li>
-      <li><a href="#ghostty">Ghostty</a></li>
-      <li><a href="#homebrew">Homebrew</a></li>
+      <li><a href="#terminal-app">Terminal</a></li>
+      <li><a href="#package-manager">Packages</a></li>
       <li><a href="#claude-code">Claude Code</a></li>
+      <li><a href="#claude-desktop">Desktop App</a></li>
       <li><a href="#terminal-basics">Terminal</a></li>
       <li><a href="#commands">Commands</a></li>
       <li><a href="#permissions">Permissions</a></li>
@@ -525,17 +568,27 @@
 <header class="hero">
   <div class="hero-eyebrow">Workshop preparation</div>
   <h1>Get your machine ready for Claude Code</h1>
-  <p>Install Ghostty, set up your terminal, and get comfortable with the tools we'll use in tomorrow's workshop. This takes about 30 minutes.</p>
+  <p>Set up your terminal, install Claude Code, and get comfortable with the tools we'll use in tomorrow's workshop. This takes about 30 minutes.</p>
 </header>
 
 <main class="content">
+
+  <!-- ================================ -->
+  <!-- OS TOGGLE -->
+  <!-- ================================ -->
+  <div class="os-toggle">
+    <div class="os-toggle-pill">
+      <button class="os-toggle-btn active" data-os="mac">Mac</button>
+      <button class="os-toggle-btn" data-os="win">Windows</button>
+    </div>
+  </div>
 
   <!-- ================================ -->
   <!-- PREREQUISITES -->
   <!-- ================================ -->
   <h2 id="prerequisites">What you need</h2>
 
-  <div class="visual-flow">
+  <div class="visual-flow os-mac">
     <div class="visual-flow-item">
       <div class="icon">💻</div>
       <div class="label">Mac</div>
@@ -555,6 +608,44 @@
     </div>
     <div class="visual-flow-arrow">&rarr;</div>
     <div class="visual-flow-item">
+      <div class="icon">💬</div>
+      <div class="label">Claude App</div>
+      <div class="sublabel">Desktop app</div>
+    </div>
+    <div class="visual-flow-arrow">&rarr;</div>
+    <div class="visual-flow-item">
+      <div class="icon">🐙</div>
+      <div class="label">GitHub</div>
+      <div class="sublabel">Account + CLI</div>
+    </div>
+  </div>
+
+  <div class="visual-flow os-win">
+    <div class="visual-flow-item">
+      <div class="icon">💻</div>
+      <div class="label">Windows</div>
+      <div class="sublabel">Win 10/11</div>
+    </div>
+    <div class="visual-flow-arrow">&rarr;</div>
+    <div class="visual-flow-item">
+      <div class="icon">🖥️</div>
+      <div class="label">Terminal</div>
+      <div class="sublabel">Windows Terminal</div>
+    </div>
+    <div class="visual-flow-arrow">&rarr;</div>
+    <div class="visual-flow-item">
+      <div class="icon">🤖</div>
+      <div class="label">Claude Code</div>
+      <div class="sublabel">AI in your terminal</div>
+    </div>
+    <div class="visual-flow-arrow">&rarr;</div>
+    <div class="visual-flow-item">
+      <div class="icon">💬</div>
+      <div class="label">Claude App</div>
+      <div class="sublabel">Desktop app</div>
+    </div>
+    <div class="visual-flow-arrow">&rarr;</div>
+    <div class="visual-flow-item">
       <div class="icon">🐙</div>
       <div class="label">GitHub</div>
       <div class="sublabel">Account + CLI</div>
@@ -564,7 +655,8 @@
   <p>Before the workshop, make sure you have:</p>
 
   <ul class="checklist">
-    <li>A Mac (any recent macOS version)</li>
+    <li class="os-mac">A Mac (any recent macOS version)</li>
+    <li class="os-win">A Windows PC (Windows 10 or 11)</li>
     <li>A <strong>GitHub account</strong> &mdash; sign up at <a href="https://github.com" target="_blank" rel="noopener">github.com</a> if you don't have one</li>
     <li>A <strong>Claude account</strong> with a <strong>Pro</strong>, <strong>Max</strong>, or <strong>Team</strong> plan &mdash; free accounts don't support Claude Code</li>
     <li>About 30 minutes to go through this setup</li>
@@ -576,12 +668,12 @@
   </div>
 
   <!-- ================================ -->
-  <!-- GHOSTTY -->
+  <!-- TERMINAL APP -->
   <!-- ================================ -->
-  <h2 id="ghostty">Install Ghostty</h2>
+  <h2 id="terminal-app"><span class="os-mac">Install Ghostty</span><span class="os-win">Set up Windows Terminal</span></h2>
 
-  <!-- Step 1 -->
-  <div class="step" data-step="1">
+  <!-- Step 1 Mac -->
+  <div class="step os-mac" data-step="1">
     <div class="step-header">
       <span class="step-number">1</span>
       <h3>Download and install Ghostty</h3>
@@ -598,13 +690,29 @@
     </div>
   </div>
 
-  <!-- ================================ -->
-  <!-- HOMEBREW -->
-  <!-- ================================ -->
-  <h2 id="homebrew">Install Homebrew</h2>
+  <!-- Step 1 Windows -->
+  <div class="step os-win" data-step="1">
+    <div class="step-header">
+      <span class="step-number">1</span>
+      <h3>Open Windows Terminal</h3>
+    </div>
+    <p><strong>Windows Terminal</strong> is the modern terminal app from Microsoft. On Windows 11, it's pre-installed. On Windows 10, grab it free from the <a href="https://aka.ms/terminal" target="_blank" rel="noopener">Microsoft Store</a>.</p>
 
-  <!-- Step 2 -->
-  <div class="step" data-step="2">
+    <p>Open it by pressing <kbd>Win</kbd> + <kbd>X</kbd> and selecting <strong>Terminal</strong>, or search for "Terminal" in the Start menu. Make sure you're in a <strong>PowerShell</strong> tab (the default), not Command Prompt.</p>
+
+    <div class="callout callout-warning">
+      <span class="callout-label">PowerShell, not CMD</span>
+      Claude Code requires PowerShell. If you see <code>C:\&gt;</code> you're in Command Prompt &mdash; open a new PowerShell tab instead. The prompt should show <code>PS C:\&gt;</code>.
+    </div>
+  </div>
+
+  <!-- ================================ -->
+  <!-- PACKAGE MANAGER -->
+  <!-- ================================ -->
+  <h2 id="package-manager"><span class="os-mac">Install Homebrew</span><span class="os-win">Install Git for Windows</span></h2>
+
+  <!-- Step 2 Mac -->
+  <div class="step os-mac" data-step="2">
     <div class="step-header">
       <span class="step-number">2</span>
       <h3>Install Homebrew (the package manager)</h3>
@@ -624,13 +732,35 @@
     </div>
   </div>
 
+  <!-- Step 2 Windows -->
+  <div class="step os-win" data-step="2">
+    <div class="step-header">
+      <span class="step-number">2</span>
+      <h3>Install Git for Windows</h3>
+    </div>
+    <p>Claude Code uses Git internally, so this is required. Download and install it from <a href="https://git-scm.com/downloads/win" target="_blank" rel="noopener"><strong>git-scm.com/downloads/win</strong></a>. Use the default settings during installation.</p>
+
+    <p>After installing, <strong>close and reopen Windows Terminal</strong> so it picks up the new PATH. Then verify:</p>
+
+    <div class="code-block">
+      <span class="code-label">PowerShell</span>
+      <code><span class="prompt">PS&gt; </span><span class="command">git --version</span>
+<span class="comment"># Should show something like: git version 2.47.1.windows.1</span></code>
+    </div>
+
+    <div class="callout callout-info">
+      <span class="callout-label">WinGet is built in</span>
+      Windows 10/11 comes with <strong>WinGet</strong>, a package manager similar to Homebrew. We'll use it to install the GitHub CLI later. No setup needed &mdash; it's already there.
+    </div>
+  </div>
+
   <!-- ================================ -->
   <!-- CLAUDE CODE -->
   <!-- ================================ -->
   <h2 id="claude-code">Install Claude Code</h2>
 
-  <!-- Step 3 -->
-  <div class="step" data-step="3">
+  <!-- Step 3 Mac -->
+  <div class="step os-mac" data-step="3">
     <div class="step-header">
       <span class="step-number">3</span>
       <h3>Install Claude Code</h3>
@@ -638,21 +768,21 @@
     <p>This installs the AI CLI tool we'll use throughout the workshop. Run this in Ghostty:</p>
 
     <div class="code-block">
-      <span class="code-label">Ghostty</span>
+      <span class="code-label"><span class="os-mac">Ghostty</span><span class="os-win">PowerShell</span></span>
       <code><span class="prompt">$ </span><span class="command">curl -fsSL https://claude.ai/install.sh | bash</span></code>
     </div>
 
     <p>Verify it installed correctly:</p>
 
     <div class="code-block">
-      <span class="code-label">Ghostty</span>
+      <span class="code-label"><span class="os-mac">Ghostty</span><span class="os-win">PowerShell</span></span>
       <code><span class="prompt">$ </span><span class="command">claude --version</span></code>
     </div>
 
     <p>Now log in. Run <code>claude</code> and it will open a browser window to authenticate with your Claude account. Follow the prompts.</p>
 
     <div class="code-block">
-      <span class="code-label">Ghostty</span>
+      <span class="code-label"><span class="os-mac">Ghostty</span><span class="os-win">PowerShell</span></span>
       <code><span class="prompt">$ </span><span class="command">claude</span></code>
     </div>
 
@@ -664,13 +794,89 @@
     </div>
   </div>
 
+  <!-- Step 3 Windows -->
+  <div class="step os-win" data-step="3">
+    <div class="step-header">
+      <span class="step-number">3</span>
+      <h3>Install Claude Code</h3>
+    </div>
+    <p>This installs the AI CLI tool we'll use throughout the workshop. Run this in PowerShell:</p>
+
+    <div class="code-block">
+      <span class="code-label">PowerShell</span>
+      <code><span class="prompt">PS&gt; </span><span class="command">irm https://claude.ai/install.ps1 | iex</span></code>
+    </div>
+
+    <p><strong>Close and reopen Windows Terminal</strong> after installation so the PATH update takes effect. Then verify:</p>
+
+    <div class="code-block">
+      <span class="code-label">PowerShell</span>
+      <code><span class="prompt">PS&gt; </span><span class="command">claude --version</span></code>
+    </div>
+
+    <p>Now log in. Run <code>claude</code> and it will open a browser window to authenticate with your Claude account. Follow the prompts.</p>
+
+    <div class="code-block">
+      <span class="code-label">PowerShell</span>
+      <code><span class="prompt">PS&gt; </span><span class="command">claude</span></code>
+    </div>
+
+    <p>Once logged in, you should see a prompt where you can type messages to Claude. Type <code>hello</code> and press Enter to verify it responds. Then type <code>/exit</code> to close the session for now.</p>
+
+    <div class="callout callout-warning">
+      <span class="callout-label">irm not recognized?</span>
+      You're probably in Command Prompt instead of PowerShell. Open a new PowerShell tab in Windows Terminal. The prompt should start with <code>PS</code>.
+    </div>
+
+    <div class="callout callout-success">
+      <span class="callout-label">You're set up</span>
+      If Claude responded to your hello, everything is working. Claude Code updates itself automatically, so you'll always have the latest version.
+    </div>
+  </div>
+
+  <!-- ================================ -->
+  <!-- CLAUDE DESKTOP APP -->
+  <!-- ================================ -->
+  <h2 id="claude-desktop">Install the Claude desktop app</h2>
+
+  <!-- Step 4 (shared) -->
+  <div class="step" data-step="4">
+    <div class="step-header">
+      <span class="step-number">4</span>
+      <h3>Download the Claude app</h3>
+    </div>
+    <p>The Claude desktop app gives you three ways to work with Claude. We'll explore all of them during the workshop:</p>
+
+    <ul class="checklist">
+      <li><strong>Chat</strong> &mdash; the familiar conversation interface, like claude.ai but as a native app</li>
+      <li><strong>Cowork</strong> &mdash; Claude works alongside you, watching your screen and offering help proactively</li>
+      <li><strong>Code</strong> &mdash; a built-in terminal where Claude Code runs inside the desktop app</li>
+    </ul>
+
+    <p class="os-mac">Download the Mac app from <a href="https://claude.ai/download" target="_blank" rel="noopener"><strong>claude.ai/download</strong></a>. Open the <code>.dmg</code> file and drag Claude to your Applications folder.</p>
+
+    <p class="os-win">Download the Windows app from <a href="https://claude.ai/download" target="_blank" rel="noopener"><strong>claude.ai/download</strong></a>. Run the installer and follow the prompts.</p>
+
+    <p>Open the app and sign in with the same Claude account you used for Claude Code. You should land on the Chat view.</p>
+
+    <div class="callout callout-info">
+      <span class="callout-label">Chat vs. Cowork vs. Code</span>
+      Think of these as three levels of autonomy. <strong>Chat</strong> is you asking questions. <strong>Cowork</strong> is Claude watching what you do and jumping in when it can help. <strong>Code</strong> is Claude driving &mdash; reading files, running commands, building things. We'll dig into when to use which during the workshop.
+    </div>
+
+    <div class="callout callout-success">
+      <span class="callout-label">Quick check</span>
+      If you can open the Claude app and see a chat interface, you're good. No extra configuration needed &mdash; we'll walk through Cowork and Code mode together at the workshop.
+    </div>
+  </div>
+
   <!-- ================================ -->
   <!-- BREATHER -->
   <!-- ================================ -->
   <div class="breather">
     <div class="breather-emoji">&#9989;</div>
     <h3 class="breather-title">Core setup done.</h3>
-    <p class="breather-text">Ghostty is installed, Claude Code works. Everything below is about getting comfortable with the terminal and understanding how Claude Code operates.</p>
+    <p class="breather-text">Terminal is set up, Claude Code works, desktop app installed. Everything below is about getting comfortable with the terminal and understanding how Claude Code operates.</p>
   </div>
 
   <!-- ================================ -->
@@ -678,7 +884,12 @@
   <!-- ================================ -->
   <h2 id="terminal-basics">Getting comfortable with the terminal</h2>
 
-  <p>If you've never used a terminal before, here's the crash course. The terminal is a text-based way to talk to your computer. Instead of clicking folders in Finder, you type commands.</p>
+  <p>If you've never used a terminal before, here's the crash course. The terminal is a text-based way to talk to your computer. Instead of clicking folders in <span class="os-mac">Finder</span><span class="os-win">File Explorer</span>, you type commands.</p>
+
+  <div class="callout callout-info os-win">
+    <span class="callout-label">Good news</span>
+    Commands like <code>pwd</code>, <code>ls</code>, <code>cd</code>, and <code>mkdir</code> all work in PowerShell. The examples below work on both Mac and Windows.
+  </div>
 
   <div class="step">
     <div class="step-header">
@@ -688,7 +899,7 @@
     <p>"Print working directory." Shows you which folder you're currently in. Think of it as looking at the breadcrumb path in Finder.</p>
 
     <div class="code-block">
-      <span class="code-label">Ghostty</span>
+      <span class="code-label"><span class="os-mac">Ghostty</span><span class="os-win">PowerShell</span></span>
       <code><span class="prompt">$ </span><span class="command">pwd</span>
 <span class="comment"># /Users/yourname</span></code>
     </div>
@@ -702,7 +913,7 @@
     <p>"List." Shows what's in the current folder. Like opening a folder in Finder.</p>
 
     <div class="code-block">
-      <span class="code-label">Ghostty</span>
+      <span class="code-label"><span class="os-mac">Ghostty</span><span class="os-win">PowerShell</span></span>
       <code><span class="prompt">$ </span><span class="command">ls</span>
 <span class="comment"># Desktop  Documents  Downloads  Projects  ...</span></code>
     </div>
@@ -716,7 +927,7 @@
     <p>"Change directory." Navigate into a folder. Use <code>cd ..</code> to go up one level (like clicking the back arrow in Finder).</p>
 
     <div class="code-block">
-      <span class="code-label">Ghostty</span>
+      <span class="code-label"><span class="os-mac">Ghostty</span><span class="os-win">PowerShell</span></span>
       <code><span class="comment"># Go into the Documents folder</span>
 <span class="prompt">$ </span><span class="command">cd Documents</span>
 
@@ -736,7 +947,7 @@
     <p>"Make directory." Creates a new folder. The <code>-p</code> flag creates parent folders if needed.</p>
 
     <div class="code-block">
-      <span class="code-label">Ghostty</span>
+      <span class="code-label"><span class="os-mac">Ghostty</span><span class="os-win">PowerShell</span></span>
       <code><span class="prompt">$ </span><span class="command">mkdir -p ~/Projects/workshop</span></code>
     </div>
   </div>
@@ -858,7 +1069,7 @@
     <p>You'll see this flag throughout the workshop guides. It tells Claude Code to skip all permission prompts &mdash; Claude can run commands, edit files, and create things without asking you each time.</p>
 
     <div class="code-block">
-      <span class="code-label">Ghostty</span>
+      <span class="code-label"><span class="os-mac">Ghostty</span><span class="os-win">PowerShell</span></span>
       <code><span class="prompt">$ </span><span class="command">claude --dangerously-skip-permissions</span></code>
     </div>
 
@@ -917,7 +1128,7 @@
     <p>For the workshop, we'll use <code>--dangerously-skip-permissions</code> to keep things moving. As you get more comfortable, you might prefer <code>default</code> or <code>acceptEdits</code> for everyday work.</p>
   </div>
 
-  <div class="step">
+  <div class="step os-mac">
     <div class="step-header">
       <span class="step-number">&rarr;</span>
       <h3>Set up aliases to save typing</h3>
@@ -940,6 +1151,36 @@
     </ul>
   </div>
 
+  <div class="step os-win">
+    <div class="step-header">
+      <span class="step-number">&rarr;</span>
+      <h3>Set up shortcuts to save typing</h3>
+    </div>
+    <p>Instead of typing the long flag every time, add functions to your PowerShell profile. First, open your profile file:</p>
+
+    <div class="code-block">
+      <span class="code-label">PowerShell</span>
+      <code><span class="prompt">PS&gt; </span><span class="command">notepad $PROFILE</span></code>
+    </div>
+
+    <p>If it asks to create the file, click Yes. Add these lines:</p>
+
+    <div class="code-block">
+      <span class="code-label">Add to PowerShell profile</span>
+      <code><span class="comment"># Claude Code shortcuts</span>
+<span class="command">function cl { claude --dangerously-skip-permissions @args }</span>
+<span class="command">function clc { claude --dangerously-skip-permissions --continue @args }</span>
+<span class="command">function clr { claude --dangerously-skip-permissions --resume @args }</span></code>
+    </div>
+
+    <p>Save and close Notepad, then reload your profile: <code>. $PROFILE</code>. Now:</p>
+    <ul class="checklist">
+      <li><code>cl</code> &mdash; start Claude with full permissions</li>
+      <li><code>clc</code> &mdash; continue the last conversation where you left off</li>
+      <li><code>clr</code> &mdash; pick a previous conversation to resume</li>
+    </ul>
+  </div>
+
   <!-- ================================ -->
   <!-- GITHUB -->
   <!-- ================================ -->
@@ -947,33 +1188,40 @@
 
   <p>GitHub is where we'll store and publish code. The CLI lets Claude create repos, push code, and deploy pages without leaving the terminal.</p>
 
-  <!-- Step 4 -->
-  <div class="step" data-step="4">
+  <!-- Step 5 -->
+  <div class="step" data-step="5">
     <div class="step-header">
-      <span class="step-number">4</span>
+      <span class="step-number">5</span>
       <h3>Create a GitHub account</h3>
     </div>
     <p>If you don't have one already, go to <a href="https://github.com" target="_blank" rel="noopener"><strong>github.com</strong></a> and sign up. A free account is all you need. Takes 2 minutes.</p>
   </div>
 
-  <!-- Step 5 -->
-  <div class="step" data-step="5">
+  <!-- Step 6 -->
+  <div class="step" data-step="6">
     <div class="step-header">
-      <span class="step-number">5</span>
+      <span class="step-number">6</span>
       <h3>Install the GitHub CLI</h3>
     </div>
     <p>This lets Claude (and you) interact with GitHub from the terminal &mdash; creating repos, pushing code, enabling GitHub Pages.</p>
 
-    <div class="code-block">
+    <div class="code-block os-mac">
       <span class="code-label">Ghostty</span>
       <code><span class="prompt">$ </span><span class="command">brew install gh</span></code>
     </div>
 
+    <div class="code-block os-win">
+      <span class="code-label">PowerShell</span>
+      <code><span class="prompt">PS&gt; </span><span class="command">winget install GitHub.cli</span></code>
+    </div>
+
+    <p class="os-win"><strong>Close and reopen Windows Terminal</strong> after installation.</p>
+
     <p>Then log in to your GitHub account:</p>
 
     <div class="code-block">
-      <span class="code-label">Ghostty</span>
-      <code><span class="prompt">$ </span><span class="command">gh auth login</span></code>
+      <span class="code-label"><span class="os-mac">Ghostty</span><span class="os-win">PowerShell</span></span>
+      <code><span class="prompt"><span class="os-mac">$ </span><span class="os-win">PS&gt; </span></span><span class="command">gh auth login</span></code>
     </div>
 
     <p>It will ask a few questions. Choose:</p>
@@ -988,21 +1236,21 @@
     <p>Verify it works:</p>
 
     <div class="code-block">
-      <span class="code-label">Ghostty</span>
-      <code><span class="prompt">$ </span><span class="command">gh auth status</span>
+      <span class="code-label"><span class="os-mac">Ghostty</span><span class="os-win">PowerShell</span></span>
+      <code><span class="prompt"><span class="os-mac">$ </span><span class="os-win">PS&gt; </span></span><span class="command">gh auth status</span>
 <span class="comment"># Should show "Logged in to github.com as yourname"</span></code>
     </div>
   </div>
 
-  <!-- Step 6 -->
-  <div class="step" data-step="6">
+  <!-- Step 7 -->
+  <div class="step" data-step="7">
     <div class="step-header">
-      <span class="step-number">6</span>
+      <span class="step-number">7</span>
       <h3>Publish a static page to GitHub Pages</h3>
     </div>
     <p>GitHub Pages lets you host static websites for free. Here's the full flow &mdash; create a page with Claude, then publish it:</p>
 
-    <div class="code-block">
+    <div class="code-block os-mac">
       <span class="code-label">Ghostty</span>
       <code><span class="comment"># Create a project folder</span>
 <span class="prompt">$ </span><span class="command">mkdir -p ~/Projects/my-page</span>
@@ -1010,6 +1258,16 @@
 
 <span class="comment"># Start Claude</span>
 <span class="prompt">$ </span><span class="command">claude --dangerously-skip-permissions</span></code>
+    </div>
+
+    <div class="code-block os-win">
+      <span class="code-label">PowerShell</span>
+      <code><span class="comment"># Create a project folder</span>
+<span class="prompt">PS&gt; </span><span class="command">mkdir -p ~\Projects\my-page</span>
+<span class="prompt">PS&gt; </span><span class="command">cd ~\Projects\my-page</span>
+
+<span class="comment"># Start Claude</span>
+<span class="prompt">PS&gt; </span><span class="command">claude --dangerously-skip-permissions</span></code>
     </div>
 
     <p>Tell Claude to build something and publish it:</p>
@@ -1043,18 +1301,24 @@ on the web. Give me the URL when it's done.</code>
     </div>
   </div>
 
-  <!-- Step 7 -->
-  <div class="step" data-step="7">
+  <!-- Step 8 -->
+  <div class="step" data-step="8">
     <div class="step-header">
-      <span class="step-number">7</span>
+      <span class="step-number">8</span>
       <h3>Update your page</h3>
     </div>
     <p>To make changes later, navigate to the project and start Claude again:</p>
 
-    <div class="code-block">
+    <div class="code-block os-mac">
       <span class="code-label">Ghostty</span>
       <code><span class="prompt">$ </span><span class="command">cd ~/Projects/my-page</span>
 <span class="prompt">$ </span><span class="command">claude --dangerously-skip-permissions</span></code>
+    </div>
+
+    <div class="code-block os-win">
+      <span class="code-label">PowerShell</span>
+      <code><span class="prompt">PS&gt; </span><span class="command">cd ~\Projects\my-page</span>
+<span class="prompt">PS&gt; </span><span class="command">claude --dangerously-skip-permissions</span></code>
     </div>
 
     <div class="code-block">
@@ -1072,7 +1336,7 @@ Then push the changes to GitHub.</code>
   <div class="breather">
     <div class="breather-emoji">&#127881;</div>
     <h3 class="breather-title">You're ready for the workshop.</h3>
-    <p class="breather-text">Ghostty installed, Claude Code working, GitHub connected. See you tomorrow.</p>
+    <p class="breather-text"><span class="os-mac">Ghostty installed, </span><span class="os-win">Terminal set up, </span>Claude Code working, GitHub connected. See you tomorrow.</p>
   </div>
 
   <!-- ================================ -->
@@ -1085,9 +1349,14 @@ Then push the changes to GitHub.</code>
     <p>No. Claude Code requires a paid plan &mdash; Pro ($20/month), Max, or Team. Enterprise and API console accounts also work. Check your plan at <a href="https://claude.ai/settings" target="_blank" rel="noopener">claude.ai/settings</a>.</p>
   </details>
 
-  <details>
+  <details class="os-mac">
     <summary>Can I use iTerm2 instead of Ghostty?</summary>
     <p>Yes. Any modern terminal works &mdash; iTerm2, Kitty, Warp, or even the built-in macOS Terminal. We recommend Ghostty because it's fast and minimal, but it's not required.</p>
+  </details>
+
+  <details class="os-win">
+    <summary>Can I use WSL instead of native Windows?</summary>
+    <p>Yes, but it's not required. Claude Code works natively on Windows via PowerShell. If you already have WSL set up and prefer using it, go ahead &mdash; the Mac/Linux instructions will apply. For this workshop, native Windows is simpler.</p>
   </details>
 
   <details>
@@ -1095,9 +1364,14 @@ Then push the changes to GitHub.</code>
     <p>For workshop exercises and prototyping, no. It means Claude can run commands and edit files without asking each time. The scary name is intentional &mdash; Anthropic wants you to use it deliberately. For production repos or sensitive projects, use the default permission mode instead.</p>
   </details>
 
-  <details>
+  <details class="os-mac">
     <summary>What if Claude Code doesn't install?</summary>
     <p>Make sure you have a recent macOS version. If the install script fails, try the Homebrew method instead: <code>brew install --cask claude-code</code>. If that fails too, ask for help at the workshop &mdash; we'll sort it out.</p>
+  </details>
+
+  <details class="os-win">
+    <summary>What if Claude Code doesn't install?</summary>
+    <p>Make sure you're running PowerShell (not CMD). If <code>irm</code> isn't recognized, try: <code>Invoke-RestMethod https://claude.ai/install.ps1 | Invoke-Expression</code>. Also make sure you close and reopen your terminal after installation. If it still fails, ask for help at the workshop.</p>
   </details>
 
   <details>
@@ -1128,6 +1402,27 @@ Then push the changes to GitHub.</code>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
+
+  // ---- OS TOGGLE ----
+  const savedOS = localStorage.getItem('workshop-os') || 'mac';
+  document.body.setAttribute('data-os', savedOS);
+
+  document.querySelectorAll('.os-toggle-btn').forEach(btn => {
+    if (btn.dataset.os === savedOS) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
+    }
+
+    btn.addEventListener('click', () => {
+      const os = btn.dataset.os;
+      document.body.setAttribute('data-os', os);
+      localStorage.setItem('workshop-os', os);
+      document.querySelectorAll('.os-toggle-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.os === os);
+      });
+    });
+  });
 
   // ---- ANCHOR LINKS ----
   function slugify(text) {
@@ -1176,6 +1471,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const code = block.querySelector('code');
       const text = code.innerText
         .replace(/^\$ /gm, '')
+        .replace(/^PS> /gm, '')
         .replace(/^#.*$/gm, '')
         .replace(/\n{2,}/g, '\n')
         .trim();
