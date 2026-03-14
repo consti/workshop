@@ -837,6 +837,16 @@
       <span style="display: block; margin-top: 10px;">Then close and reopen Terminal once more.</span>
     </div>
 
+    <div class="callout callout-warning">
+      <span class="callout-label">"claude" not recognized?</span>
+      The install succeeded but PowerShell doesn't see it yet. Refresh your PATH without restarting:
+      <div class="code-block" style="margin-top: 12px; margin-bottom: 0;">
+        <code><span class="prompt">PS&gt; </span><span class="command">$env:Path = [System.Environment]::GetEnvironmentVariable("Path", "User") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "Machine")</span>
+<span class="prompt">PS&gt; </span><span class="command">claude --version</span></code>
+      </div>
+      <span style="display: block; margin-top: 10px;">If that still doesn't work, close <strong>all</strong> Windows Terminal windows (not just the tab) and open a fresh one.</span>
+    </div>
+
     <div class="callout callout-success">
       <span class="callout-label">You're set up</span>
       If Claude responded to your hello, everything is working. Claude Code updates itself automatically, so you'll always have the latest version.
