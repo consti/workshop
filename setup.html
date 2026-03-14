@@ -828,6 +828,15 @@
       You're probably in Command Prompt instead of PowerShell. Open a new PowerShell tab in Windows Terminal. The prompt should start with <code>PS</code>.
     </div>
 
+    <div class="callout callout-warning">
+      <span class="callout-label">Yellow warning about git-bash?</span>
+      If the installer shows a yellow message saying "Claude Code on Windows requires git-bash" &mdash; Git is installed but not in your PATH. <strong>Close and reopen Windows Terminal</strong>, then try <code>claude</code> again. If the warning persists, set the path manually:
+      <div class="code-block" style="margin-top: 12px; margin-bottom: 0;">
+        <code><span class="prompt">PS&gt; </span><span class="command">[System.Environment]::SetEnvironmentVariable("CLAUDE_CODE_GIT_BASH_PATH", "C:\Program Files\Git\bin\bash.exe", "User")</span></code>
+      </div>
+      <span style="display: block; margin-top: 10px;">Then close and reopen Terminal once more.</span>
+    </div>
+
     <div class="callout callout-success">
       <span class="callout-label">You're set up</span>
       If Claude responded to your hello, everything is working. Claude Code updates itself automatically, so you'll always have the latest version.
