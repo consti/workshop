@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Workshop Setup — Get Ready for Claude Code</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #FAFAF9;
+      --text: #1A1A1A;
+      --text-muted: #666666;
+      --text-light: #999999;
+      --accent: #7C3AED;
+      --accent-bg: #F5F3FF;
+      --code-bg: #1E1E1E;
+      --code-text: #D4D4D4;
+      --border: #E5E5E3;
+      --card-bg: #FFFFFF;
+      --step-line: #E0E0DC;
+      --warning-bg: #FFFBEB;
+      --warning-border: #F5D060;
+      --warning-text: #7A5D00;
+      --success-bg: #F0FDF4;
+      --success-border: #86EFAC;
+      --success-text: #166534;
+    }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 70px; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 17px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ---- NAV ---- */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(250, 250, 249, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    nav .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 14px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    nav .nav-title {
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: -0.02em;
+    }
+
+    nav .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+
+    nav .nav-links a {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    nav .nav-links a:hover { color: var(--text); }
+
+    /* ---- HERO ---- */
+    .hero {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 140px 40px 80px;
+    }
+
+    .hero-eyebrow {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-size: clamp(32px, 5vw, 48px);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      max-width: 700px;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 19px;
+      color: var(--text-muted);
+      max-width: 560px;
+      line-height: 1.6;
+    }
+
+    /* ---- CONTENT ---- */
+    .content {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 40px 100px;
+    }
+
+    .content h2 {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin: 72px 0 24px;
+      padding-top: 16px;
+      position: relative;
+    }
+
+    .content h2 .anchor-link {
+      color: var(--text-light);
+      text-decoration: none;
+      font-weight: 400;
+      margin-left: 10px;
+      opacity: 0;
+      transition: opacity 0.2s;
+      font-size: 22px;
+    }
+
+    .content h2:hover .anchor-link { opacity: 1; }
+
+    .content p { margin: 16px 0; }
+    .content p + p { margin-top: 12px; }
+
+    /* ---- STEPS ---- */
+    .step {
+      margin: 32px 0;
+      padding-left: 48px;
+      position: relative;
+    }
+
+    .step::before {
+      content: '';
+      position: absolute;
+      left: 17px;
+      top: 48px;
+      bottom: -32px;
+      width: 2px;
+      background: var(--step-line);
+    }
+
+    .step:last-child::before { display: none; }
+
+    .step-header {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+
+    .step-number {
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-size: 40px;
+      font-weight: 900;
+      color: var(--border);
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+
+    .step h3 {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .step h3 .anchor-link {
+      color: var(--text-light);
+      text-decoration: none;
+      font-weight: 400;
+      margin-left: 8px;
+      opacity: 0;
+      transition: opacity 0.2s;
+      font-size: 16px;
+    }
+
+    .step:hover h3 .anchor-link { opacity: 1; }
+
+    /* ---- BREATHER ---- */
+    .breather {
+      text-align: center;
+      margin: 80px 0;
+      padding: 48px 32px;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .breather-emoji {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+
+    .breather-title {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .breather-text {
+      font-size: 17px;
+      color: var(--text-muted);
+      max-width: 460px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* ---- CODE BLOCKS ---- */
+    .code-block {
+      background: var(--code-bg);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin: 16px 0 24px;
+      overflow-x: auto;
+      position: relative;
+    }
+
+    .code-block code {
+      font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 14px;
+      line-height: 1.7;
+      color: #F1F1F1;
+    }
+
+    .code-block .comment { color: #8DB98A; }
+    .code-block .command { color: #FFFFFF; }
+    .code-block .flag { color: #B4DEFF; }
+    .code-block .string { color: #F0C4A8; }
+    .code-block .prompt { color: #8DB98A; user-select: none; }
+
+    .code-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #AAA;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    /* ---- COPY BUTTON ---- */
+    .code-block-wrapper {
+      position: relative;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #999;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 5px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s;
+      z-index: 2;
+    }
+
+    .copy-btn:hover {
+      background: rgba(255, 255, 255, 0.14);
+      color: #DDD;
+    }
+
+    .copy-btn.copied {
+      color: #8DB98A;
+      border-color: rgba(141, 185, 138, 0.3);
+    }
+
+    /* Inline code */
+    code {
+      font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.9em;
+      background: #EEEEEA;
+      padding: 2px 7px;
+      border-radius: 5px;
+    }
+
+    /* Reset inline styles inside code blocks */
+    .code-block code {
+      background: none;
+      padding: 0;
+      border-radius: 0;
+      white-space: pre-wrap;
+      display: block;
+    }
+
+    /* ---- CALLOUTS ---- */
+    .callout {
+      border-radius: 10px;
+      padding: 18px 22px;
+      margin: 20px 0;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .callout-warning {
+      background: var(--warning-bg);
+      border: 1px solid var(--warning-border);
+      color: var(--warning-text);
+    }
+
+    .callout-success {
+      background: var(--success-bg);
+      border: 1px solid var(--success-border);
+      color: var(--success-text);
+    }
+
+    .callout-info {
+      background: #F0F4FF;
+      border: 1px solid #B8CCFF;
+      color: #1E3A6E;
+    }
+
+    .callout-label {
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    /* ---- VISUAL EXPLAINER ---- */
+    .visual-flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin: 40px 0;
+      flex-wrap: nowrap;
+    }
+
+    .visual-flow-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 14px;
+      text-align: center;
+      min-width: 0;
+      flex: 1;
+    }
+
+    .visual-flow-item .icon { font-size: 24px; margin-bottom: 6px; }
+    .visual-flow-item .label { font-size: 13px; font-weight: 700; letter-spacing: -0.01em; }
+    .visual-flow-item .sublabel { font-size: 11px; color: var(--text-light); margin-top: 2px; }
+
+    .visual-flow-arrow {
+      font-size: 16px;
+      color: var(--text-light);
+      flex-shrink: 0;
+    }
+
+    /* ---- CHECKLIST ---- */
+    .checklist {
+      list-style: none;
+      margin: 16px 0;
+    }
+
+    .checklist li {
+      padding: 10px 0;
+      padding-left: 32px;
+      position: relative;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .checklist li:last-child { border-bottom: none; }
+
+    .checklist li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 14px;
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--border);
+      border-radius: 4px;
+    }
+
+    /* ---- FAQ ---- */
+    details {
+      border-bottom: 1px solid var(--border);
+      padding: 18px 0;
+    }
+
+    summary {
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    summary::before {
+      content: '+';
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--text-light);
+      width: 24px;
+      text-align: center;
+      flex-shrink: 0;
+      transition: transform 0.2s;
+    }
+
+    details[open] summary::before {
+      content: '\2212';
+    }
+
+    details p {
+      margin-top: 12px;
+      padding-left: 36px;
+      color: var(--text-muted);
+      font-size: 15px;
+    }
+
+    /* ---- PERMISSION TABLE ---- */
+    .perm-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 15px;
+    }
+
+    .perm-table th,
+    .perm-table td {
+      text-align: left;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .perm-table th {
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      background: var(--bg);
+    }
+
+    .perm-table td:first-child {
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .perm-table td:first-child code {
+      font-size: 0.85em;
+    }
+
+    /* ---- FOOTER ---- */
+    footer {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 40px 60px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--text-light);
+    }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 640px) {
+      .hero { padding: 120px 24px 60px; }
+      .content { padding: 0 24px 80px; }
+      nav .nav-inner { padding: 14px 24px; }
+      nav .nav-links { display: none; }
+      .visual-flow { flex-direction: column; flex-wrap: wrap; }
+      .visual-flow-item { flex: unset; min-width: 140px; }
+      .visual-flow-arrow { transform: rotate(90deg); }
+      .step-number { font-size: 36px; }
+      .perm-table { font-size: 14px; }
+      .perm-table th, .perm-table td { padding: 10px 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <span class="nav-title">Workshop Setup</span>
+    <ul class="nav-links">
+      <li><a href="#prerequisites">Prerequisites</a></li>
+      <li><a href="#ghostty">Ghostty</a></li>
+      <li><a href="#homebrew">Homebrew</a></li>
+      <li><a href="#claude-code">Claude Code</a></li>
+      <li><a href="#terminal-basics">Terminal</a></li>
+      <li><a href="#commands">Commands</a></li>
+      <li><a href="#permissions">Permissions</a></li>
+      <li><a href="#github">GitHub</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-eyebrow">Workshop preparation</div>
+  <h1>Get your machine ready for Claude Code</h1>
+  <p>Install Ghostty, set up your terminal, and get comfortable with the tools we'll use in tomorrow's workshop. This takes about 30 minutes.</p>
+</header>
+
+<main class="content">
+
+  <!-- ================================ -->
+  <!-- PREREQUISITES -->
+  <!-- ================================ -->
+  <h2 id="prerequisites">What you need</h2>
+
+  <div class="visual-flow">
+    <div class="visual-flow-item">
+      <div class="icon">💻</div>
+      <div class="label">Mac</div>
+      <div class="sublabel">macOS</div>
+    </div>
+    <div class="visual-flow-arrow">&rarr;</div>
+    <div class="visual-flow-item">
+      <div class="icon">👻</div>
+      <div class="label">Ghostty</div>
+      <div class="sublabel">Terminal app</div>
+    </div>
+    <div class="visual-flow-arrow">&rarr;</div>
+    <div class="visual-flow-item">
+      <div class="icon">🤖</div>
+      <div class="label">Claude Code</div>
+      <div class="sublabel">AI in your terminal</div>
+    </div>
+    <div class="visual-flow-arrow">&rarr;</div>
+    <div class="visual-flow-item">
+      <div class="icon">🐙</div>
+      <div class="label">GitHub</div>
+      <div class="sublabel">Account + CLI</div>
+    </div>
+  </div>
+
+  <p>Before the workshop, make sure you have:</p>
+
+  <ul class="checklist">
+    <li>A Mac (any recent macOS version)</li>
+    <li>A <strong>GitHub account</strong> &mdash; sign up at <a href="https://github.com" target="_blank" rel="noopener">github.com</a> if you don't have one</li>
+    <li>A <strong>Claude account</strong> with a <strong>Pro</strong>, <strong>Max</strong>, or <strong>Team</strong> plan &mdash; free accounts don't support Claude Code</li>
+    <li>About 30 minutes to go through this setup</li>
+  </ul>
+
+  <div class="callout callout-warning">
+    <span class="callout-label">Claude account required</span>
+    Claude Code needs a paid Claude account. Free accounts won't work. You need at least a <strong>Pro</strong> plan ($20/month) from <a href="https://claude.ai" target="_blank" rel="noopener" style="color: inherit; font-weight: 600;">claude.ai</a>. Max and Team plans also work. If you're unsure which plan you have, go to <a href="https://claude.ai/settings" target="_blank" rel="noopener" style="color: inherit; font-weight: 600;">claude.ai/settings</a> and check your subscription.
+  </div>
+
+  <!-- ================================ -->
+  <!-- GHOSTTY -->
+  <!-- ================================ -->
+  <h2 id="ghostty">Install Ghostty</h2>
+
+  <!-- Step 1 -->
+  <div class="step" data-step="1">
+    <div class="step-header">
+      <span class="step-number">1</span>
+      <h3>Download and install Ghostty</h3>
+    </div>
+    <p><a href="https://ghostty.org" target="_blank" rel="noopener"><strong>Ghostty</strong></a> is a fast, native terminal app. It handles long output smoothly (which matters when Claude is generating code) and stays out of your way. It's what we'll use in the workshop.</p>
+
+    <p>Go to <a href="https://ghostty.org" target="_blank" rel="noopener">ghostty.org</a> and download the macOS app. Open the <code>.dmg</code> file and drag Ghostty to your Applications folder, just like any other Mac app.</p>
+
+    <p>Open Ghostty from your Applications folder (or use Spotlight: <kbd>Cmd</kbd> + <kbd>Space</kbd>, type "Ghostty", press Enter). You should see a terminal window with a blinking cursor.</p>
+
+    <div class="callout callout-info">
+      <span class="callout-label">Why Ghostty?</span>
+      Claude Code produces a lot of output &mdash; code diffs, build logs, agent progress. Ghostty handles this without lagging. The default macOS Terminal app tends to struggle with long sessions. If you already use <strong>iTerm2</strong> or another terminal you're comfortable with, that works too.
+    </div>
+  </div>
+
+  <!-- ================================ -->
+  <!-- HOMEBREW -->
+  <!-- ================================ -->
+  <h2 id="homebrew">Install Homebrew</h2>
+
+  <!-- Step 2 -->
+  <div class="step" data-step="2">
+    <div class="step-header">
+      <span class="step-number">2</span>
+      <h3>Install Homebrew (the package manager)</h3>
+    </div>
+    <p>Homebrew is like an app store for developer tools that runs in the terminal. We'll use it to install a few things. Paste this into Ghostty:</p>
+
+    <div class="code-block">
+      <span class="code-label">Ghostty &mdash; paste this entire line</span>
+      <code><span class="prompt">$ </span><span class="command">/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</span></code>
+    </div>
+
+    <p>It will ask for your Mac password (the one you use to log in). Nothing appears on screen as you type &mdash; that's normal. Press Enter when done. Follow any "Next steps" it prints at the end.</p>
+
+    <div class="callout callout-warning">
+      <span class="callout-label">Already have Homebrew?</span>
+      Run <code>brew --version</code>. If it prints a version number, skip this step.
+    </div>
+  </div>
+
+  <!-- ================================ -->
+  <!-- CLAUDE CODE -->
+  <!-- ================================ -->
+  <h2 id="claude-code">Install Claude Code</h2>
+
+  <!-- Step 3 -->
+  <div class="step" data-step="3">
+    <div class="step-header">
+      <span class="step-number">3</span>
+      <h3>Install Claude Code</h3>
+    </div>
+    <p>This installs the AI CLI tool we'll use throughout the workshop. Run this in Ghostty:</p>
+
+    <div class="code-block">
+      <span class="code-label">Ghostty</span>
+      <code><span class="prompt">$ </span><span class="command">curl -fsSL https://claude.ai/install.sh | bash</span></code>
+    </div>
+
+    <p>Verify it installed correctly:</p>
+
+    <div class="code-block">
+      <span class="code-label">Ghostty</span>
+      <code><span class="prompt">$ </span><span class="command">claude --version</span></code>
+    </div>
+
+    <p>Now log in. Run <code>claude</code> and it will open a browser window to authenticate with your Claude account. Follow the prompts.</p>
+
+    <div class="code-block">
+      <span class="code-label">Ghostty</span>
+      <code><span class="prompt">$ </span><span class="command">claude</span></code>
+    </div>
+
+    <p>Once logged in, you should see a prompt where you can type messages to Claude. Type <code>hello</code> and press Enter to verify it responds. Then type <code>/exit</code> to close the session for now.</p>
+
+    <div class="callout callout-success">
+      <span class="callout-label">You're set up</span>
+      If Claude responded to your hello, everything is working. Claude Code updates itself automatically, so you'll always have the latest version.
+    </div>
+  </div>
+
+  <!-- ================================ -->
+  <!-- BREATHER -->
+  <!-- ================================ -->
+  <div class="breather">
+    <div class="breather-emoji">&#9989;</div>
+    <h3 class="breather-title">Core setup done.</h3>
+    <p class="breather-text">Ghostty is installed, Claude Code works. Everything below is about getting comfortable with the terminal and understanding how Claude Code operates.</p>
+  </div>
+
+  <!-- ================================ -->
+  <!-- TERMINAL BASICS -->
+  <!-- ================================ -->
+  <h2 id="terminal-basics">Getting comfortable with the terminal</h2>
+
+  <p>If you've never used a terminal before, here's the crash course. The terminal is a text-based way to talk to your computer. Instead of clicking folders in Finder, you type commands.</p>
+
+  <div class="step">
+    <div class="step-header">
+      <span class="step-number">&rarr;</span>
+      <h3>Where you are: <code>pwd</code></h3>
+    </div>
+    <p>"Print working directory." Shows you which folder you're currently in. Think of it as looking at the breadcrumb path in Finder.</p>
+
+    <div class="code-block">
+      <span class="code-label">Ghostty</span>
+      <code><span class="prompt">$ </span><span class="command">pwd</span>
+<span class="comment"># /Users/yourname</span></code>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-header">
+      <span class="step-number">&rarr;</span>
+      <h3>What's here: <code>ls</code></h3>
+    </div>
+    <p>"List." Shows what's in the current folder. Like opening a folder in Finder.</p>
+
+    <div class="code-block">
+      <span class="code-label">Ghostty</span>
+      <code><span class="prompt">$ </span><span class="command">ls</span>
+<span class="comment"># Desktop  Documents  Downloads  Projects  ...</span></code>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-header">
+      <span class="step-number">&rarr;</span>
+      <h3>Move around: <code>cd</code></h3>
+    </div>
+    <p>"Change directory." Navigate into a folder. Use <code>cd ..</code> to go up one level (like clicking the back arrow in Finder).</p>
+
+    <div class="code-block">
+      <span class="code-label">Ghostty</span>
+      <code><span class="comment"># Go into the Documents folder</span>
+<span class="prompt">$ </span><span class="command">cd Documents</span>
+
+<span class="comment"># Go back up one level</span>
+<span class="prompt">$ </span><span class="command">cd ..</span>
+
+<span class="comment"># Go to your home folder from anywhere</span>
+<span class="prompt">$ </span><span class="command">cd ~</span></code>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-header">
+      <span class="step-number">&rarr;</span>
+      <h3>Create folders: <code>mkdir</code></h3>
+    </div>
+    <p>"Make directory." Creates a new folder. The <code>-p</code> flag creates parent folders if needed.</p>
+
+    <div class="code-block">
+      <span class="code-label">Ghostty</span>
+      <code><span class="prompt">$ </span><span class="command">mkdir -p ~/Projects/workshop</span></code>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-header">
+      <span class="step-number">&rarr;</span>
+      <h3>The essential pattern</h3>
+    </div>
+    <p>Most of your terminal work with Claude Code follows this pattern:</p>
+
+    <div class="code-block">
+      <span class="code-label">The workflow you'll use every time</span>
+      <code><span class="comment"># 1. Navigate to your project folder</span>
+<span class="prompt">$ </span><span class="command">cd ~/Projects/my-project</span>
+
+<span class="comment"># 2. Start Claude Code</span>
+<span class="prompt">$ </span><span class="command">claude</span>
+
+<span class="comment"># 3. Talk to Claude in plain English</span>
+<span class="string">"Create a new web page with a hero section and contact form"</span>
+
+<span class="comment"># 4. Exit when done</span>
+<span class="string">/exit</span></code>
+    </div>
+
+    <div class="callout callout-info">
+      <span class="callout-label">Tab completion</span>
+      Press <kbd>Tab</kbd> while typing a folder or file name and the terminal will auto-complete it. This saves typing and prevents typos. Try it: type <code>cd Docu</code> then press <kbd>Tab</kbd>.
+    </div>
+  </div>
+
+  <!-- ================================ -->
+  <!-- SLASH COMMANDS -->
+  <!-- ================================ -->
+  <h2 id="commands">Useful slash commands</h2>
+
+  <p>While chatting with Claude, you can type commands that start with <code>/</code>. These control the tool itself &mdash; they're not messages to Claude.</p>
+
+  <div class="step">
+    <div class="step-header">
+      <span class="step-number">/</span>
+      <h3><code>/status</code> &mdash; Check your usage</h3>
+    </div>
+    <p>See how much of your rate limit you've used. Useful when Claude seems slow &mdash; you might be near your limit.</p>
+  </div>
+
+  <div class="step">
+    <div class="step-header">
+      <span class="step-number">/</span>
+      <h3><code>/clear</code> &mdash; Start a fresh conversation</h3>
+    </div>
+    <p>Resets the conversation while keeping all project files. Use this when switching between tasks or when Claude seems confused by old context.</p>
+  </div>
+
+  <div class="step">
+    <div class="step-header">
+      <span class="step-number">/</span>
+      <h3><code>/help</code> &mdash; See all available commands</h3>
+    </div>
+    <p>Shows the full list of slash commands and keyboard shortcuts.</p>
+  </div>
+
+  <div class="step">
+    <div class="step-header">
+      <span class="step-number">/</span>
+      <h3><code>/btw</code> &mdash; Ask a quick side question</h3>
+    </div>
+    <p>Need a quick answer while Claude is working? Type <code>/btw</code> followed by your question. It answers in an overlay from existing conversation context, doesn't interrupt the main task, and disappears when you press <kbd>Esc</kbd>.</p>
+  </div>
+
+  <div class="step">
+    <div class="step-header">
+      <span class="step-number">/</span>
+      <h3><code>/review</code> &mdash; Code and security review</h3>
+    </div>
+    <p>Run a review of your code or recent changes. Claude checks for common issues &mdash; security vulnerabilities, bugs, hardcoded secrets, missing validation.</p>
+  </div>
+
+  <div class="step">
+    <div class="step-header">
+      <span class="step-number">/</span>
+      <h3><code>/insights</code> &mdash; Analyze your usage</h3>
+    </div>
+    <p>Generates a report on how you've been using Claude Code &mdash; patterns, suggestions, and features you might be missing. Good to run after a few sessions.</p>
+  </div>
+
+  <div class="step">
+    <div class="step-header">
+      <span class="step-number">&#9099;</span>
+      <h3><kbd>Esc</kbd> <kbd>Esc</kbd> &mdash; Rewind conversation and code</h3>
+    </div>
+    <p>Press <kbd>Esc</kbd> twice to open the rewind menu. Pick a point in the conversation to go back to, and Claude reverts both the chat and the code changes it made after that point. This is your undo button.</p>
+
+    <ul class="checklist">
+      <li><strong>Restore code and conversation</strong> &mdash; revert both to that point (most common)</li>
+      <li><strong>Restore conversation only</strong> &mdash; rewind the chat but keep current code</li>
+      <li><strong>Restore code only</strong> &mdash; revert files but keep conversation history</li>
+    </ul>
+
+    <div class="callout callout-success">
+      <span class="callout-label">Experiment freely</span>
+      Because you can always rewind, feel free to try things. If Claude takes a wrong turn, <kbd>Esc</kbd> <kbd>Esc</kbd> and you're right back where you started. You can also type <code>/rewind</code> instead.
+    </div>
+  </div>
+
+  <!-- ================================ -->
+  <!-- PERMISSIONS -->
+  <!-- ================================ -->
+  <h2 id="permissions">Understanding permissions</h2>
+
+  <p>By default, Claude Code asks for permission before doing things like running commands or editing files. You'll see a prompt each time. This is safe but can be slow when you're prototyping.</p>
+
+  <div class="step">
+    <div class="step-header">
+      <span class="step-number">&rarr;</span>
+      <h3>The <code>--dangerously-skip-permissions</code> flag</h3>
+    </div>
+    <p>You'll see this flag throughout the workshop guides. It tells Claude Code to skip all permission prompts &mdash; Claude can run commands, edit files, and create things without asking you each time.</p>
+
+    <div class="code-block">
+      <span class="code-label">Ghostty</span>
+      <code><span class="prompt">$ </span><span class="command">claude --dangerously-skip-permissions</span></code>
+    </div>
+
+    <p>The name sounds scary on purpose. Anthropic wants to make sure you only use it intentionally. Here's what it means in practice:</p>
+
+    <ul class="checklist">
+      <li>Claude can run any terminal command without asking</li>
+      <li>Claude can read and edit any file in your project without asking</li>
+      <li>Claude can install packages, create files, and delete files without asking</li>
+    </ul>
+
+    <div class="callout callout-warning">
+      <span class="callout-label">When to use it</span>
+      For prototyping and workshop exercises, this flag is fine. It makes the experience much smoother. For production work or repositories with sensitive data, use the default permission mode instead and approve actions individually.
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-header">
+      <span class="step-number">&rarr;</span>
+      <h3>All permission modes</h3>
+    </div>
+    <p>Claude Code has five permission modes. The <code>--dangerously-skip-permissions</code> flag is just the most permissive one:</p>
+
+    <table class="perm-table">
+      <thead>
+        <tr>
+          <th>Mode</th>
+          <th>What it does</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>default</code></td>
+          <td>Asks for permission on first use of each tool. The safe default.</td>
+        </tr>
+        <tr>
+          <td><code>acceptEdits</code></td>
+          <td>Auto-approves file edits but still asks for other actions (like running commands).</td>
+        </tr>
+        <tr>
+          <td><code>plan</code></td>
+          <td>Read-only mode. Claude can analyze code but can't modify files or run commands. Good for reviewing and planning.</td>
+        </tr>
+        <tr>
+          <td><code>dontAsk</code></td>
+          <td>Auto-denies everything unless you've pre-approved specific tools via <code>/permissions</code>.</td>
+        </tr>
+        <tr>
+          <td><code>bypassPermissions</code></td>
+          <td>Skips all prompts. Same as <code>--dangerously-skip-permissions</code>.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>For the workshop, we'll use <code>--dangerously-skip-permissions</code> to keep things moving. As you get more comfortable, you might prefer <code>default</code> or <code>acceptEdits</code> for everyday work.</p>
+  </div>
+
+  <div class="step">
+    <div class="step-header">
+      <span class="step-number">&rarr;</span>
+      <h3>Set up aliases to save typing</h3>
+    </div>
+    <p>Instead of typing the long flag every time, add shortcuts to your shell config:</p>
+
+    <div class="code-block">
+      <span class="code-label">Add to ~/.zshrc</span>
+      <code><span class="comment"># Claude Code shortcuts</span>
+<span class="command">alias cl='claude --dangerously-skip-permissions'</span>
+<span class="command">alias clc='claude --dangerously-skip-permissions --continue'</span>
+<span class="command">alias clr='claude --dangerously-skip-permissions --resume'</span></code>
+    </div>
+
+    <p>Run <code>source ~/.zshrc</code> to activate them. Now:</p>
+    <ul class="checklist">
+      <li><code>cl</code> &mdash; start Claude with full permissions</li>
+      <li><code>clc</code> &mdash; continue the last conversation where you left off</li>
+      <li><code>clr</code> &mdash; pick a previous conversation to resume</li>
+    </ul>
+  </div>
+
+  <!-- ================================ -->
+  <!-- GITHUB -->
+  <!-- ================================ -->
+  <h2 id="github">GitHub setup</h2>
+
+  <p>GitHub is where we'll store and publish code. The CLI lets Claude create repos, push code, and deploy pages without leaving the terminal.</p>
+
+  <!-- Step 4 -->
+  <div class="step" data-step="4">
+    <div class="step-header">
+      <span class="step-number">4</span>
+      <h3>Create a GitHub account</h3>
+    </div>
+    <p>If you don't have one already, go to <a href="https://github.com" target="_blank" rel="noopener"><strong>github.com</strong></a> and sign up. A free account is all you need. Takes 2 minutes.</p>
+  </div>
+
+  <!-- Step 5 -->
+  <div class="step" data-step="5">
+    <div class="step-header">
+      <span class="step-number">5</span>
+      <h3>Install the GitHub CLI</h3>
+    </div>
+    <p>This lets Claude (and you) interact with GitHub from the terminal &mdash; creating repos, pushing code, enabling GitHub Pages.</p>
+
+    <div class="code-block">
+      <span class="code-label">Ghostty</span>
+      <code><span class="prompt">$ </span><span class="command">brew install gh</span></code>
+    </div>
+
+    <p>Then log in to your GitHub account:</p>
+
+    <div class="code-block">
+      <span class="code-label">Ghostty</span>
+      <code><span class="prompt">$ </span><span class="command">gh auth login</span></code>
+    </div>
+
+    <p>It will ask a few questions. Choose:</p>
+    <ul class="checklist">
+      <li><strong>GitHub.com</strong> (not Enterprise)</li>
+      <li><strong>HTTPS</strong> as the protocol</li>
+      <li><strong>Login with a web browser</strong> when asked how to authenticate</li>
+    </ul>
+
+    <p>Follow the prompts &mdash; it opens your browser to authorize the connection.</p>
+
+    <p>Verify it works:</p>
+
+    <div class="code-block">
+      <span class="code-label">Ghostty</span>
+      <code><span class="prompt">$ </span><span class="command">gh auth status</span>
+<span class="comment"># Should show "Logged in to github.com as yourname"</span></code>
+    </div>
+  </div>
+
+  <!-- Step 6 -->
+  <div class="step" data-step="6">
+    <div class="step-header">
+      <span class="step-number">6</span>
+      <h3>Publish a static page to GitHub Pages</h3>
+    </div>
+    <p>GitHub Pages lets you host static websites for free. Here's the full flow &mdash; create a page with Claude, then publish it:</p>
+
+    <div class="code-block">
+      <span class="code-label">Ghostty</span>
+      <code><span class="comment"># Create a project folder</span>
+<span class="prompt">$ </span><span class="command">mkdir -p ~/Projects/my-page</span>
+<span class="prompt">$ </span><span class="command">cd ~/Projects/my-page</span>
+
+<span class="comment"># Start Claude</span>
+<span class="prompt">$ </span><span class="command">claude --dangerously-skip-permissions</span></code>
+    </div>
+
+    <p>Tell Claude to build something and publish it:</p>
+
+    <div class="code-block">
+      <span class="code-label">You &rarr; Claude</span>
+      <code>Build a simple landing page with a hero section, about
+section, and a contact link. Use clean, modern design.
+Everything in a single index.html file.
+
+Then create a GitHub repository called "my-page", push
+this project to it, and set up GitHub Pages so it's live
+on the web. Give me the URL when it's done.</code>
+    </div>
+
+    <p>Claude will:</p>
+    <ul class="checklist">
+      <li>Build the HTML page</li>
+      <li>Initialize a Git repository</li>
+      <li>Create a repo on your GitHub account</li>
+      <li>Push the code</li>
+      <li>Enable GitHub Pages</li>
+      <li>Give you the live URL</li>
+    </ul>
+
+    <p>Your page will be live at <code>https://yourusername.github.io/my-page/</code> within a minute or two.</p>
+
+    <div class="callout callout-success">
+      <span class="callout-label">Free hosting, forever</span>
+      GitHub Pages is free for public repos. Your page stays online as long as the repo exists. No hosting fees, no server management.
+    </div>
+  </div>
+
+  <!-- Step 7 -->
+  <div class="step" data-step="7">
+    <div class="step-header">
+      <span class="step-number">7</span>
+      <h3>Update your page</h3>
+    </div>
+    <p>To make changes later, navigate to the project and start Claude again:</p>
+
+    <div class="code-block">
+      <span class="code-label">Ghostty</span>
+      <code><span class="prompt">$ </span><span class="command">cd ~/Projects/my-page</span>
+<span class="prompt">$ </span><span class="command">claude --dangerously-skip-permissions</span></code>
+    </div>
+
+    <div class="code-block">
+      <span class="code-label">You &rarr; Claude</span>
+      <code>Update the hero section with a new headline.
+Then push the changes to GitHub.</code>
+    </div>
+
+    <p>Claude edits the file, commits, and pushes. The live page updates automatically within a minute.</p>
+  </div>
+
+  <!-- ================================ -->
+  <!-- BREATHER -->
+  <!-- ================================ -->
+  <div class="breather">
+    <div class="breather-emoji">&#127881;</div>
+    <h3 class="breather-title">You're ready for the workshop.</h3>
+    <p class="breather-text">Ghostty installed, Claude Code working, GitHub connected. See you tomorrow.</p>
+  </div>
+
+  <!-- ================================ -->
+  <!-- FAQ -->
+  <!-- ================================ -->
+  <h2 id="faq">Common questions</h2>
+
+  <details>
+    <summary>Can I use a free Claude account?</summary>
+    <p>No. Claude Code requires a paid plan &mdash; Pro ($20/month), Max, or Team. Enterprise and API console accounts also work. Check your plan at <a href="https://claude.ai/settings" target="_blank" rel="noopener">claude.ai/settings</a>.</p>
+  </details>
+
+  <details>
+    <summary>Can I use iTerm2 instead of Ghostty?</summary>
+    <p>Yes. Any modern terminal works &mdash; iTerm2, Kitty, Warp, or even the built-in macOS Terminal. We recommend Ghostty because it's fast and minimal, but it's not required.</p>
+  </details>
+
+  <details>
+    <summary>Is <code>--dangerously-skip-permissions</code> actually dangerous?</summary>
+    <p>For workshop exercises and prototyping, no. It means Claude can run commands and edit files without asking each time. The scary name is intentional &mdash; Anthropic wants you to use it deliberately. For production repos or sensitive projects, use the default permission mode instead.</p>
+  </details>
+
+  <details>
+    <summary>What if Claude Code doesn't install?</summary>
+    <p>Make sure you have a recent macOS version. If the install script fails, try the Homebrew method instead: <code>brew install --cask claude-code</code>. If that fails too, ask for help at the workshop &mdash; we'll sort it out.</p>
+  </details>
+
+  <details>
+    <summary>Do I need to know how to code?</summary>
+    <p>Basic familiarity with the terminal helps (that's why this page covers it). You don't need to know any programming language &mdash; Claude writes the code. You describe what you want in plain English.</p>
+  </details>
+
+  <details>
+    <summary>What if I hit rate limits during the workshop?</summary>
+    <p>Type <code>/status</code> inside Claude Code to check your usage. If you're near the limit, let us know &mdash; we can help sort out your access.</p>
+  </details>
+
+  <details>
+    <summary>Can I use VS Code or Cursor alongside Claude Code?</summary>
+    <p>Absolutely. Claude Code runs in the terminal, your editor runs separately. Use VS Code or Cursor to browse and read the code Claude generates. They complement each other well.</p>
+  </details>
+
+  <details>
+    <summary>What's the difference between Claude Code and Claude.ai?</summary>
+    <p>Claude.ai is the web chat interface. Claude Code is a command-line tool that runs in your terminal, can read and write files on your machine, run commands, create git commits, and interact with GitHub. Same AI, much more powerful when it can touch your filesystem.</p>
+  </details>
+
+</main>
+
+<footer>
+  <p>Workshop preparation guide. Powered by Claude Code.</p>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+  // ---- ANCHOR LINKS ----
+  function slugify(text) {
+    return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  }
+
+  // Add # links to h2 headings
+  document.querySelectorAll('.content h2[id]').forEach(h2 => {
+    const link = document.createElement('a');
+    link.className = 'anchor-link';
+    link.href = '#' + h2.id;
+    link.textContent = '#';
+    h2.appendChild(link);
+  });
+
+  // Add IDs and # links to all step h3 headings
+  document.querySelectorAll('.step h3').forEach(h3 => {
+    const step = h3.closest('.step');
+    let id;
+    if (step.dataset.step) {
+      id = 'step-' + step.dataset.step;
+    } else {
+      id = slugify(h3.textContent);
+    }
+    step.id = id;
+    const link = document.createElement('a');
+    link.className = 'anchor-link';
+    link.href = '#' + id;
+    link.textContent = '#';
+    h3.appendChild(link);
+  });
+
+  // ---- COPY BUTTONS ----
+  document.querySelectorAll('.code-block').forEach(block => {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'code-block-wrapper';
+    block.parentNode.insertBefore(wrapper, block);
+    wrapper.appendChild(block);
+
+    const btn = document.createElement('button');
+    btn.className = 'copy-btn';
+    btn.textContent = 'Copy';
+    wrapper.appendChild(btn);
+
+    btn.addEventListener('click', () => {
+      const code = block.querySelector('code');
+      const text = code.innerText
+        .replace(/^\$ /gm, '')
+        .replace(/^#.*$/gm, '')
+        .replace(/\n{2,}/g, '\n')
+        .trim();
+      navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500);
+      });
+    });
+  });
+});
+</script>
+</body>
+</html>
